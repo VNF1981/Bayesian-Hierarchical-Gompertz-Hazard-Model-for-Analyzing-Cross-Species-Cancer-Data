@@ -1,18 +1,12 @@
 # ACE Age and Sex Simulation
 
-This repository contains R code for the first step of a pilot Bayesian hierarchical Gompertz modeling workflow for cross species cancer data.
+This repository contains R code for the first step of a pilot Bayesian hierarchical Gompertz modeling workflow for the ACE cross-species cancer data.
 
-The goal of this step is to convert the original ACE species level dataset into a simulated individual level dataset. The original dataset contains one row per species, with the number of necropsies, cancer counts, taxonomic information, and life history traits. However, a Gompertzian hazard model requires individual level records with age, sex, and event status.
-
-Because true age and sex resolved records are not currently available, we simulate these values for model development and assurance analysis.
+The goal of this step is to convert the original ACE species level dataset into a simulated individual level dataset. The original dataset contains one row per species, with the number of necropsies, cancer counts, taxonomic information, and life history traits. However, a Gompertzian hazard model requires individual level records with age, sex, and event status. Because true age and sex resolved records are not currently available, we simulate these values for model development and assurance analysis.
 
 ## Main idea
 
-For this pilot simulation, we use the total number of necropsies for each species as the total number of simulated animals for that species. For example, if a species has 45 necropsies, the simulated dataset includes 45 animals for that species.
-
-We also preserve the original malignancy count. If that species has 12 malignant cases, then exactly 12 of the 45 simulated animals are assigned malignancy status 1, and the remaining 33 are assigned malignancy status 0.
-
-This produces an individual level dataset that keeps the original ACE malignancy and necropsy structure while adding simulated age and sex values needed for the next modeling step. 
+For this pilot simulation, we use the total number of necropsies for each species as the total number of simulated animals for that species. For example, if a species has 45 necropsies, the simulated dataset includes 45 animals for that species. We also preserve the original malignancy count. If that species has 12 malignant cases, then exactly 12 of the 45 simulated animals are assigned malignancy status 1, and the remaining 33 are assigned malignancy status 0. This produces an individual level dataset that keeps the original ACE malignancy and necropsy structure while adding simulated age and sex values needed for the next modeling step. 
 
 ## Life history cleaning and imputation
 
