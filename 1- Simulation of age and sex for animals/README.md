@@ -14,7 +14,7 @@ For simplicity in this pilot simulation, we use the total number of necropsies f
 
 ## Input file
 
-The script uses the original ACE dataset in the [Compton et al. 2025]([https://example.com](https://aacrjournals.org/cancerdiscovery/article/15/1/227/750844/Cancer-Prevalence-across-VertebratesCancer-across?guestAccessKey=)) paper, named here as:
+The script uses the original ACE dataset in the [Compton et al. 2025](https://doi.org/10.1158/2159-8290.CD-24-0573) paper, named here as:
 
 ```text
 Compton_data.xlsx
