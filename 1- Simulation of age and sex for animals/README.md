@@ -66,6 +66,8 @@ rbeta(n_animals, shape1 = 4.0, shape2 = 1.8)
 
 This makes malignant animals older on average, which is consistent with the general expectation that malignancy risk increases with age.
 
+![Simulated age fraction distributions](age_fraction_distributions.png)
+
 The output age variables are:
 
 ```r
