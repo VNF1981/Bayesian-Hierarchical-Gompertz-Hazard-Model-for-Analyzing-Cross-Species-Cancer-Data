@@ -1,25 +1,23 @@
 # ACE Individual Level Age and Sex Simulation
 
-This folder contains the first step of the Gompertzian modeling workflow for the ACE comparative oncology dataset.
+This folder contains the first step of the Gompertzian modeling workflow for the ACE cross-species cancer data.
 
 The goal of this step is to convert the original species level ACE dataset into a simulated individual level dataset. The resulting file includes one row per animal, with simulated age and sex, while preserving the original species level counts for malignancy and necropsy records.
 
-This simulated dataset will later be used to develop and test a Bayesian hierarchical Gompertzian hazard model for malignancy.
+This simulated dataset will be used in step 2 to develop and test a Bayesian hierarchical Gompertzian hazard pilot model for malignancy.
 
 ## Purpose
 
-The available ACE dataset is organized at the species level. For each species, the dataset includes information such as the number of necropsies, number of benign tumors, number of neoplasia cases, number of malignancy cases, and several life history traits.
+The available ACE dataset is organized at the species level. For each species, the dataset includes information such as the number of necropsies, number of benign tumors, number of neoplasia cases, number of malignancy cases, and several life history traits. However, a Gompertzian hazard model requires individual level information, especially age at diagnosis or age at censoring (i.e., a case in which an animal was observed for some time, but we did not observe the event of interest during that observation period). Because true age and sex resolved individual records are not currently available, this script simulates age and sex for each animal.
 
-However, a Gompertzian hazard model requires individual level information, especially age at diagnosis or age at censoring. Because true age and sex resolved individual records are not currently available, this script simulates age and sex for each animal.
-
-This allows us to build and test the modeling framework before applying it to future data with real age, sex, diagnosis, and denominator information.
+For simplicity in this pilot simulation, we use the total number of necropsies for each species as the total number of animals simulated for that species. In other words, if a species has 45 necropsies in the original ACE dataset, the simulated individual level dataset will include 45 animals for that species. This allows us to build and test the modeling framework before applying it to future data with real age, sex, diagnosis, and denominator information.
 
 ## Input file
 
-The script uses the following input file:
+The script uses the original ACE dataset in the [Compton et al. 2025]([https://example.com](https://aacrjournals.org/cancerdiscovery/article/15/1/227/750844/Cancer-Prevalence-across-VertebratesCancer-across?guestAccessKey=)) paper, named here as:
 
 ```text
-Compton_data_plus_simulated_Age_Sex.xlsx
+Compton_data.xlsx
 ```
 
 This file contains the ACE species level dataset.
