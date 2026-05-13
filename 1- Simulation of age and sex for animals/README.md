@@ -1,4 +1,4 @@
-# Simulation of random Age and Sex for ACE Cross-species Cancer Data 
+# Simulation of Age and Sex for ACE Cross-species Cancer Data 
 
 This repository contains R code for the first step of a pilot Bayesian hierarchical Gompertz modeling workflow for the ACE cross-species cancer data.
 
