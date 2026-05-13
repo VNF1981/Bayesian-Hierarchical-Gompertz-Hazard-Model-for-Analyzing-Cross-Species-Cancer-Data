@@ -30,13 +30,11 @@ Class
 Global median
 ```
 
-For example, if maximum longevity is missing for one species, the script first tries to fill it using the median longevity of species in the same genus. If that is not available, it tries family, then order, then clade, then class, and finally the global median.
-
-The filled maximum longevity value is then used to simulate age.
+For example, if maximum longevity is missing for one species, the script first tries to fill it using the median longevity of species in the same genus. If that is not available, it tries family, then order, then clade, then class, and finally the global median. The filled maximum longevity value is then used to simulate age.
 
 ## Sex simulation
 
-Sex is simulated independently for each animal using the uniform distribution and a 50 to 50 probability:
+Sex is simulated independently for each animal using a uniform distribution and a 50 to 50 probability:
 
 ```r
 sex <- ifelse(runif(n_animals) <= 0.5, "F", "M")
