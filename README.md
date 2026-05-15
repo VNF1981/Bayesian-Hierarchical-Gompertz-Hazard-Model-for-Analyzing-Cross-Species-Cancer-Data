@@ -4,4 +4,4 @@ This repository includes R code for: \
 2- Fitting a pilot Bayesian hierarchical Gompertz model for malignancy \
 3- Developing a Bayesian assurance analysis framework fro the Gompertz model.
 
-## Each folder has its own README file explaining the full process in detail. 
+### Each folder has its own README file explaining the full process in detail. 
