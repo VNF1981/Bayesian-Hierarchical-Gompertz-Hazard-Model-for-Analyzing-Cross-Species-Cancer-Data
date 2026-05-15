@@ -1,6 +1,6 @@
 # Gompertz Model for Age-Specific Malignancy Risk
 
-This folder contains the final Bayesian hierarchical phylogenetic Gompertz model used to estimate age-specific malignancy risk across mammalian species.
+This folder contains a pilot Bayesian hierarchical phylogenetic Gompertz model used to estimate age-specific malignancy risk across mammalian species.
 
 The model uses individual-level simulated records with species identity, age, sex, malignancy status, and species-level life-history predictors.
 
