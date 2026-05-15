@@ -1,4 +1,4 @@
-# Gompertz Model for Age-Specific Malignancy Risk
+# A Pilot Joint Hierarchical Phylogenetic Gompertz Model for Cross-Species Age-Specific Malignancy Risk
 
 This folder contains a pilot joint Bayesian hierarchical phylogenetic Gompertz model used to estimate age-specific malignancy risk across mammalian species.
 
@@ -36,8 +36,6 @@ gestation length
 standardized log-transformed life-history predictors
 species IDs
 ```
-### *** In the individual-level data, `malignancy = 1` indicates that malignancy was observed at the animal’s recorded age, which is treated as the event time. Animals with `malignancy = 0` had no observed malignancy by their recorded age and are therefore treated as right-censored at that age. ***
-
 ## Model overview
 
 We modeled malignancy incidence using a Gompertz hazard function. For individual animal `j` from species `i`, the hazard of malignancy at age `t` is:
@@ -50,7 +48,7 @@ where:
 ```text
 i = species
 j = individual animal
-t_ij = age of animal j in species i, measured in decades
+t_ij = age of animal j in species i, measured in decades (see below)
 t_ref,i = species-specific reference age, measured in decades
 α_mid,i = species-specific malignancy hazard at mid lifespan (see explanation below)
 β_i = species-specific age-related change in malignancy hazard
@@ -58,20 +56,19 @@ t_ref,i = species-specific reference age, measured in decades
 sex_ij = 1 for male, 0 for female
 ```
 
-Animals with malignancy are modeled as events. Animals without malignancy are treated as right-censored observations.
+### *** Animals with malignancy are modeled as events. Animals without malignancy are treated as right-censored observations. In other words, in the individual-level data, `malignancy = 1` indicates that malignancy was observed at the animal’s recorded age, which is treated as the event time. Animals with `malignancy = 0` had no observed malignancy by their recorded age and are therefore treated as right-censored at that age. ***
 
+### *** Age was modeled in decades rather than years or months to improve numerical stability in the Gompertz likelihood. Because the hazard changes exponentially with age, using decades keeps the age scale moderate and makes `β_i` interpretable as the species-specific age-related change in malignancy hazard per decade. ***
 
 ## Age parameterization
 
 The initial modeling goal was to estimate `α_i` as the species-specific malignancy hazard at age zero. However, this parameterization caused computational instability in Stan. The issue was that malignancy risk is extremely low near age zero, especially for long-lived species. As a result, the baseline hazard at age zero and the Gompertz slope `β_i` became strongly coupled, producing poor posterior geometry and inefficient sampling.
 To improve stability, I reparameterized the model around a biologically meaningful reference age: species-specific mid lifespan. I will work on this to see how I can include `α_i = malignancy at age zero` for our final model 
-
 ```text
 t_ref,i = 0.5 × maximum longevity_i
 ```
 
 Because maximum longevity was recorded in months, the reference age in decades was calculated as:
-
 ```text
 ref_age_decades = max_longevity_M / 240
 ```
