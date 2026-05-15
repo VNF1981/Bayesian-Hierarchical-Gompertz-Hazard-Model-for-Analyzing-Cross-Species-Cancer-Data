@@ -1,4 +1,4 @@
-# Gompertz Malignancy Body-Mass Assurance Analysis
+# Gompertz Alpha Body-Mass Assurance Analysis
 
 This folder contains the simulation-based assurance analysis for the final joint hierarchical phylogenetic Gompertz model.
 
@@ -55,8 +55,9 @@ All 250 model refits completed successfully. No fits hit the maximum treedepth l
 ```text
 08_Gompertz_Assurance_body_mass_array_worker_CLEAN_FINAL.R
 08_Combine_Gompertz_Assurance_body_mass_array_results_CLEAN_FINAL.R
-submit_gompertz_assurance_body_mass_array_CLEAN_FINAL.slurm
+07_gompertz_malignancy_phylo_alpha_beta_lambda_full_assurance_inputs.rds
 ```
+The last one is the output from the main Gompertz model we performed in the previous step, 2- Joint Bayesian Hierarchical Gompertz Model
 
 The combined outputs are written to:
 
