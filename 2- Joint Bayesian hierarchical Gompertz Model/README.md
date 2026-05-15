@@ -8,8 +8,9 @@ The model uses individual-level simulated records with species identity, age, se
 
 We modeled malignancy incidence using a Gompertz hazard function. For individual animal `j` from species `i`, the hazard of malignancy at age `t` is:
 
+```text
 h_ij(t) = α_mid,i × exp(β_i(t_ij − t_ref,i) + γ sex_ij)
-
+```
 
 where:
 
