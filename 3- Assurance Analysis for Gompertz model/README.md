@@ -1,4 +1,4 @@
-# Gompertz Body-Mass Assurance Analysis
+# Gompertz Malignancy Body-Mass Assurance Analysis
 
 This folder contains the simulation-based assurance analysis for the final joint hierarchical phylogenetic Gompertz model.
 
