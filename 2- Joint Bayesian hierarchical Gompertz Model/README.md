@@ -87,7 +87,7 @@ This keeps the Gompertz model structure intact while improving numerical stabili
 
 ## Species-level hierarchical model
 
-The model estimates both species-specific Gompertz parameters jointly.
+### *** The model estimates both species-specific Gompertz parameters jointly. I designed the model so that `α_mid,i` is always positive because it represents a malignancy hazard rate at species-specific mid lifespan, and hazard rates cannot be negative. In contrast, `β_i` was allowed to take negative, zero, or positive values because it represents how malignancy hazard changes with age. A positive `β_i` indicates increasing hazard with age, a value near zero indicates approximately constant hazard with age, and a negative `β_i` indicates decreasing hazard with age. ***
 
 For malignancy hazard at mid lifespan:
 
@@ -149,18 +149,27 @@ The phylogenetic model used the species present in both the individual-level dat
 ```
 
 The final model used Pagel’s lambda:
-
 ```text
 λ = 0.46
 ```
+Ths is the λ reported fro neoplasia and body mass in the big paper (I used a wrong one! It must be for malignancy and mass). The value can be changed in the fitting script by editing:
+```text
+pagel_lambda <- 0.46
+```
 
-A Brownian motion option was retained in the code, but the default analysis used the Pagel lambda covariance matrix.
+A Brownian motion (BM) option was retained in the code. You can change the model to BM by changing this line:
+```text
+phylo_mode <- "lambda"
+to
+phylo_mode <- "BM"
+```
+
+Briefly, we first construct the Brownian motion phylogenetic variance-covariance matrix from the tree. Pagel’s lambda is then applied by multiplying the off-diagonal elements of this matrix (covariances) by `λ`, while keeping the diagonal elements (variances) equal to 1. This reduces or increases the expected covariance among species according to their shared evolutionary history, while preserving each species’ variance.
+
 
 ## Why a joint model?
 
-We used a joint hierarchical model rather than a two-stage model.
-
-In a two-stage approach, species-specific Gompertz parameters would first be estimated separately and then used as outcomes in a second phylogenetic regression. That approach is not ideal here because species differ substantially in sample size and malignancy event count. Some species have few or zero malignancy events, so their species-specific estimates would be highly uncertain.
+I used a joint hierarchical model rather than a two-stage model. In a two-stage approach, species-specific Gompertz parameters would first be estimated separately and then used as outcomes in a second phylogenetic regression. I decided that this approach would not be ideal here because species differ substantially in within-species sample size (i.e., the number of individuals per species) and malignancy event count. Some species have few or zero malignancy events, so their species-specific estimates would be highly uncertain. Thus, it would be difficult to fully propagate uncertainty from the first-stage estimates into the second-stage phylogenetic regression. For this reason, I used a joint hierarchical model that estimates the individual-level Gompertz process, species-level parameters, life-history effects, and phylogenetic effects simultaneously.
 
 The joint model estimates all components simultaneously:
 
@@ -177,7 +186,7 @@ This allows uncertainty in species-specific Gompertz parameters to propagate dir
 
 ## Why a custom Stan model?
 
-A custom Stan model was used because the final model required several features that are difficult to combine in standard survival packages:
+A custom Stan model was used because the final model required several features that are difficult to combine in available standard survival packages:
 
 ```text
 species-specific α_mid
