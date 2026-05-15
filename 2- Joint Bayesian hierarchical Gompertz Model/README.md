@@ -87,7 +87,7 @@ This keeps the Gompertz model structure intact while improving numerical stabili
 
 ## Species-level hierarchical model
 
-### *** The model estimates both species-specific Gompertz parameters jointly. I designed the model so that `α_mid,i` is always positive because it represents a malignancy hazard rate at species-specific mid lifespan, and hazard rates cannot be negative. In contrast, `β_i` was allowed to take negative, zero, or positive values because it represents how malignancy hazard changes with age. A positive `β_i` indicates increasing hazard with age, a value near zero indicates approximately constant hazard with age, and a negative `β_i` indicates decreasing hazard with age. ***
+The model estimates both species-specific Gompertz parameters jointly. I designed the model so that `α_mid,i` is always positive because it represents a malignancy hazard rate at age zero (here is mid lifespan instead), and hazard rates cannot be negative. In contrast, `β_i` was allowed to take negative, zero, or positive values because it represents how malignancy hazard changes with age. A positive `β_i` indicates increasing hazard with age, a value near zero indicates approximately constant hazard with age, and a negative `β_i` indicates decreasing hazard with age. ***
 
 For malignancy hazard at mid lifespan:
 
@@ -186,7 +186,9 @@ This allows uncertainty in species-specific Gompertz parameters to propagate dir
 
 ## Why a custom Stan model?
 
-A custom Stan model was used because the final model required several features that are difficult to combine in available standard survival packages:
+I used a custom Stan model because the final model structure is not directly supported as a standard off-the-shelf model in common survival modeling packages. The model required a joint Gompertz likelihood with species-specific `α_mid` and `β`, where `β` can take positive, zero, or negative values; individual-level sex effects; right censoring (I need to incorporate left truncation/delayed entries); life-history predictors on both Gompertz parameters; and phylogenetic covariance on both `α_mid` and `β`. While some packages can support parts of this structure, implementing the full model in a transparent and flexible way was more straightforward in custom Stan code. I developed the model step by step, 
+
+*** The final model was developed incrementally with AI assistance by adding one component at a time and checking that each version worked correctly before adding the next layer of complexity, including covered data preparation, the Gompertz likelihood, hierarchical species effects, life-history predictors, and phylogenetic covariance. ***
 
 ```text
 species-specific α_mid
@@ -223,8 +225,9 @@ max_treedepth = 15
 Pagel λ = 0.46
 ```
 
-Model diagnostics from the full run were strong overall:
+adapt_delta is a Stan/HMC tuning parameter that controls how carefully the sampler avoids numerical problems during sampling. Higher adapt_delta values usually mean fewer divergent transitions, more stable sampling, and slower runtime. max_treedepth is another Stan/HMC tuning parameter. It limits how long Stan can explore the posterior during a single MCMC transition.
 
+Model diagnostics from the full run were strong overall:
 ```text
 all 4 chains completed successfully
 0 maximum treedepth hits
@@ -237,38 +240,29 @@ A more conservative rerun with `adapt_delta = 0.99` can be used if a fully diver
 
 ## Notes on model development
 
-The final model was developed incrementally, with separate technical checks for data preparation, the Gompertz likelihood, hierarchical species effects, life-history predictors, and phylogenetic covariance.
-
-This README describes only the final validated model structure used for analysis.
-
 ## Main files
 
 ```text
 gompertz_model_input.rds
 ```
-
 Prepared model input containing the individual-level malignancy dataset and species-level life-history predictors.
 
 ```text
 min20Fixed516.nwk
 ```
-
 Phylogenetic tree used for the mammalian analysis.
 
 ```text
 07_gompertz_malignancy_alpha_mid_beta_LFH_phylo_alpha_beta.stan
 ```
-
 Final Stan model.
 
 ```text
 07_fit_gompertz_malignancy_alpha_mid_beta_LFH_phylo_alpha_beta_MONSOON_with_assurance_input.R
 ```
-
 Script used to fit the final model on Monsoon and save the assurance input object.
 
 For a portable GitHub version, users may replace the Monsoon-specific project path with:
-
 ```r
 project_dir <- getwd()
 ```
