@@ -60,6 +60,8 @@ sex_ij = 1 for male, 0 for female
 
 ### *** Age was modeled in decades rather than years or months to improve numerical stability in the Gompertz likelihood. Because the hazard changes exponentially with age, using decades keeps the age scale moderate and makes `β_i` interpretable as the species-specific age-related change in malignancy hazard per decade. ***
 
+If age is measured in months, then β becomes very small because each unit is only one month. If age is measured in years, it is better, but some species still have long lifespans, which can make the exponential term harder for Stan to sample efficiently.
+
 ## Age parameterization
 
 The initial modeling goal was to estimate `α_i` as the species-specific malignancy hazard at age zero. However, this parameterization caused computational instability in Stan. The issue was that malignancy risk is extremely low near age zero, especially for long-lived species. As a result, the baseline hazard at age zero and the Gompertz slope `β_i` became strongly coupled, producing poor posterior geometry and inefficient sampling.
