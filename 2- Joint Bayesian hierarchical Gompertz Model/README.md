@@ -87,7 +87,7 @@ This keeps the Gompertz model structure intact while improving numerical stabili
 
 ## Species-level hierarchical model
 
-The model estimates both species-specific Gompertz parameters jointly. I designed the model so that `α_mid,i` is always positive because it represents a malignancy hazard rate at age zero (here is mid lifespan instead), and hazard rates cannot be negative. In contrast, `β_i` was allowed to take negative, zero, or positive values because it represents how malignancy hazard changes with age. A positive `β_i` indicates increasing hazard with age, a value near zero indicates approximately constant hazard with age, and a negative `β_i` indicates decreasing hazard with age. ***
+The model estimates both species-specific Gompertz parameters jointly. I designed the model so that `α_mid,i` is always positive because it represents a malignancy hazard rate at age zero (here is mid lifespan instead), and hazard rates cannot be negative. In contrast, `β_i` was allowed to take negative, zero (i.e., for exceptionally cancer resistant species), or positive values because it represents how malignancy hazard changes with age. A positive `β_i` indicates increasing hazard with age, a value near zero indicates approximately constant hazard with age, and a negative `β_i` indicates decreasing hazard with age. ***
 
 For malignancy hazard at mid lifespan:
 
