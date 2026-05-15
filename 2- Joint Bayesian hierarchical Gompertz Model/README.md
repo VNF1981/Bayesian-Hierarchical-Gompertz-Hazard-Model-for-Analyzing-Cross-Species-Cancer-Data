@@ -186,7 +186,7 @@ This allows uncertainty in species-specific Gompertz parameters to propagate dir
 
 ## Why a custom Stan model?
 
-I used a custom Stan model because the final model structure is not directly supported as a standard off-the-shelf model in common survival modeling packages. The model required a joint Gompertz likelihood with species-specific `α_mid` and `β`, where `β` can take positive, zero, or negative values; individual-level sex effects; right censoring (I need to incorporate left truncation/delayed entries); life-history predictors on both Gompertz parameters; and phylogenetic covariance on both `α_mid` and `β`. While some packages can support parts of this structure, implementing the full model in a transparent and flexible way was more straightforward in custom Stan code. 
+I used a custom Stan model because the final model structure is not directly supported as a standard off-the-shelf model in common survival modeling packages. The model required a joint Gompertz likelihood with species-specific `α_mid` and `β`, where `β` can take positive, zero, or negative values; individual-level sex effects; right censoring (I need to incorporate left truncation/delayed entries as well); life-history predictors on both Gompertz parameters; and phylogenetic covariance on both `α_mid` and `β`. While some packages can support parts of this structure, implementing the full model in a transparent and flexible way was more straightforward in custom Stan code. 
 
 *** The final model was developed incrementally with AI assistance by adding one component at a time and checking that each version worked correctly before adding the next layer of complexity, including covered data preparation, the Gompertz likelihood, hierarchical species effects, life-history predictors, and phylogenetic covariance. ***
 
@@ -270,13 +270,11 @@ project_dir <- getwd()
 ## Main outputs
 
 The final model writes outputs to:
-
 ```text
 results_07_full_phylo_lambda/
 ```
 
 Key output files include:
-
 ```text
 07_gompertz_malignancy_phylo_alpha_beta_lambda_full_fit.rds
 07_gompertz_malignancy_phylo_alpha_beta_lambda_full_summary.csv
@@ -291,7 +289,6 @@ species_missing_from_tree.csv
 ## Running the model
 
 Place the following files in the same folder:
-
 ```text
 gompertz_model_input.rds
 min20Fixed516.nwk
@@ -299,10 +296,6 @@ min20Fixed516.nwk
 07_fit_gompertz_malignancy_alpha_mid_beta_LFH_phylo_alpha_beta_MONSOON_with_assurance_input.R
 ```
 
-Then run the fitting script in R:
+Then run the fitting script in R. 
 
-```r
-source("07_fit_gompertz_malignancy_alpha_mid_beta_LFH_phylo_alpha_beta_MONSOON_with_assurance_input.R")
-```
-
-For local or non-Monsoon use, update the project path and CmdStan path at the top of the R script.
+## *** As a reference, the full model completed in less than one hour on the Monsoon cluster using 1 node, 1 task, 8 CPUs, and 128 GB RAM. ***
