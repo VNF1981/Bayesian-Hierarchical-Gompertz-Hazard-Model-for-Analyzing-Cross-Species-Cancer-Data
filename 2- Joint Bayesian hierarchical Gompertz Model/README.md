@@ -56,9 +56,9 @@ t_ref,i = species-specific reference age, measured in decades
 sex_ij = 1 for male, 0 for female
 ```
 
-### *** Animals with malignancy are modeled as events. Animals without malignancy are treated as right-censored observations. In other words, in the individual-level data, `malignancy = 1` indicates that malignancy was observed at the animal’s recorded age, which is treated as the event time. Animals with `malignancy = 0` had no observed malignancy by their recorded age and are therefore treated as right-censored at that age. ***
+*** Animals with malignancy are modeled as events. Animals without malignancy are treated as right-censored observations. In other words, in the individual-level data, `malignancy = 1` indicates that malignancy was observed at the animal’s recorded age, which is treated as the event time. Animals with `malignancy = 0` had no observed malignancy by their recorded age and are therefore treated as right-censored at that age. ***
 
-### *** Age was modeled in decades rather than years or months to improve numerical stability in the Gompertz likelihood. Because the hazard changes exponentially with age, using decades keeps the age scale moderate and makes `β_i` interpretable as the species-specific age-related change in malignancy hazard per decade. ***
+*** Age was modeled in decades rather than years or months to improve numerical stability in the Gompertz likelihood. Because the hazard changes exponentially with age, using decades keeps the age scale moderate and makes `β_i` interpretable as the species-specific age-related change in malignancy hazard per decade. ***
 
 If age is measured in months, then β becomes very small because each unit is only one month. If age is measured in years, it is better, but some species still have long lifespans, which can make the exponential term harder for Stan to sample efficiently.
 
