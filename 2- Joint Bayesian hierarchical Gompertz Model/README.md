@@ -33,7 +33,7 @@ The species-level predictor table includes:
 adult body mass
 maximum longevity
 gestation length
-standardized log-transformed life-history predictors
+standardized log-transformed of these life-history predictors
 species IDs
 ```
 ## Model overview
