@@ -52,7 +52,7 @@ i = species
 j = individual animal
 t_ij = age of animal j in species i, measured in decades
 t_ref,i = species-specific reference age, measured in decades
-α_mid,i = species-specific malignancy hazard at mid lifespan
+α_mid,i = species-specific malignancy hazard at mid lifespan (see explanation below)
 β_i = species-specific age-related change in malignancy hazard
 γ = sex effect on the log-hazard scale
 sex_ij = 1 for male, 0 for female
@@ -60,34 +60,11 @@ sex_ij = 1 for male, 0 for female
 
 Animals with malignancy are modeled as events. Animals without malignancy are treated as right-censored observations.
 
-## Age and sex coding
-
-Age was simulated and prepared in the age/sex simulation step before fitting this model. In the Gompertz model, age is converted from years to decades:
-
-```text
-age_decades = age_years / 10
-```
-
-Sex is encoded as:
-
-```text
-sex_male = 0 for female
-sex_male = 1 for male
-```
-
-This coding is used directly in the hazard model through the term:
-
-```text
-γ sex_ij
-```
 
 ## Age parameterization
 
-The initial modeling goal was to estimate `α_i` as the species-specific malignancy hazard at age zero. However, this parameterization caused computational instability in Stan.
-
-The issue was that malignancy risk is extremely low near age zero, especially for long-lived species. As a result, the baseline hazard at age zero and the Gompertz slope `β_i` became strongly coupled, producing poor posterior geometry and inefficient sampling.
-
-To improve stability, we reparameterized the model around a biologically meaningful reference age: species-specific mid lifespan.
+The initial modeling goal was to estimate `α_i` as the species-specific malignancy hazard at age zero. However, this parameterization caused computational instability in Stan. The issue was that malignancy risk is extremely low near age zero, especially for long-lived species. As a result, the baseline hazard at age zero and the Gompertz slope `β_i` became strongly coupled, producing poor posterior geometry and inefficient sampling.
+To improve stability, I reparameterized the model around a biologically meaningful reference age: species-specific mid lifespan. I will work on this to see how I can include `α_i = malignancy at age zero` for our final model 
 
 ```text
 t_ref,i = 0.5 × maximum longevity_i
