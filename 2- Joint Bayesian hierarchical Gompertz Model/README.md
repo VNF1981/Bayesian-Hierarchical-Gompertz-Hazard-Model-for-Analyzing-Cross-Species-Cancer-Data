@@ -1,30 +1,27 @@
 # Gompertz Model for Age-Specific Malignancy Risk
 
-This folder contains the final Bayesian hierarchical phylogenetic Gompertz model used to estimate age-specific malignancy risk across mammalian species.
+This folder contains a pilot joint Bayesian hierarchical phylogenetic Gompertz model used to estimate age-specific malignancy risk across mammalian species.
 
-The model starts from a prepared input object, `gompertz_model_input.rds`, which contains the individual-level simulated malignancy dataset and species-level life-history predictors. Users do not need to rerun the age/sex simulation pipeline to fit the Gompertz model.
+The model starts from the prepared input object `gompertz_model_input.rds`, which was generated in Step 1 during the age and sex simulation pipeline. This object contains the individual-level simulated animal data, including age, sex, malignancy status, and species identity, together with species-level life-history predictors. Therefore, users do not need to rerun the age/sex simulation pipeline before fitting the Gompertz model.
 
 ## Input data
 
 The main input file is:
-
 ```text
 gompertz_model_input.rds
 ```
 
 This file contains:
-
 ```text
 individual_data
 species_predictors
 ```
 
 The individual-level data include:
-
 ```text
 species identity
 individual animal ID
-age
+age at malignancy diagnosis or censoring
 sex
 malignancy event status
 right-censoring status
@@ -32,7 +29,6 @@ life-history variables merged to individuals
 ```
 
 The species-level predictor table includes:
-
 ```text
 adult body mass
 maximum longevity
@@ -40,13 +36,11 @@ gestation length
 standardized log-transformed life-history predictors
 species IDs
 ```
-
-The prepared RDS file is a data-preparation output, not an output from an earlier model.
+### *** In the individual-level data, `malignancy = 1` indicates that malignancy was observed at the animal’s recorded age, which is treated as the event time. Animals with `malignancy = 0` had no observed malignancy by their recorded age and are therefore treated as right-censored at that age. ***
 
 ## Model overview
 
 We modeled malignancy incidence using a Gompertz hazard function. For individual animal `j` from species `i`, the hazard of malignancy at age `t` is:
-
 ```text
 h_ij(t) = α_mid,i × exp(β_i(t_ij − t_ref,i) + γ sex_ij)
 ```
