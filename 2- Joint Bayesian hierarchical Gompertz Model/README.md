@@ -205,6 +205,38 @@ species-specific reference ages
 
 The Stan model directly implements the Gompertz hazard and cumulative hazard likelihood.
 
+## Sex effect in the pilot model
+
+Sex was included as an individual-level covariate in the Gompertz hazard model:
+```text
+h_ij(t) = α_mid,i × exp(β_i(t_ij − t_ref,i) + γ sex_ij)
+```
+
+where:
+```text
+sex_ij = 0 for females
+sex_ij = 1 for males
+γ = global sex effect on the log-hazard scale
+```
+
+In this parameterization, `γ` is estimated across all species while accounting for age, species identity, life-history predictors, phylogeny, and censoring.
+
+The male-to-female hazard ratio is:
+```text
+exp(γ)
+```
+
+Therefore:
+```text
+γ > 0  means males have higher malignancy hazard than females
+γ < 0  means males have lower malignancy hazard than females
+γ ≈ 0  means there is little evidence for an overall sex difference
+```
+
+In the current pilot version, sex is modeled as a single global effect. The model does not estimate separate male- and female-specific Gompertz parameters for each species. If the full analysis shows evidence of meaningful sex differences and the data support additional complexity, a future model extension could allow sex effects to vary across species or clades.
+
+In the current pilot version, sex is modeled as a single global effect. The model does not estimate separate male- and female-specific Gompertz parameters for each species. If the full analysis shows evidence of meaningful sex differences and the data support additional complexity, a future model extension could allow sex effects to vary across species or clades. In the current pilot analysis with simulated individual-level age and sex data, the estimated global sex effect was close to zero, meaning there was no clear evidence for an overall difference in malignancy hazard between males and females in the pilot analysis. However, this result is based on simulated data and should not be interpreted as a biological conclusion about sex-specific cancer risk.
+
 ## Final full model run
 
 The final full model was run on Monsoon using the phylogeny-matched mammal dataset:
