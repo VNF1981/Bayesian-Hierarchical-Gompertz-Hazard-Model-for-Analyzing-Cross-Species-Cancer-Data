@@ -1,4 +1,4 @@
-# Bayesian-Hierarchical-Gompertz-Hazard-Model-for-Analyzing-Cross-Species-Cancer-Data
+# Joint-Hierarchical-Phylogenetic-Gompertz-Hazard-Model-for-Analyzing-Cross-Species-Cancer-Data
 This repository includes R code for: \
 1- Simulating age and sex data for species \
 2- Fitting a pilot Bayesian hierarchical Gompertz model for malignancy \
